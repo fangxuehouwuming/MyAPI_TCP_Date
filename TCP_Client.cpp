@@ -1,9 +1,9 @@
 
 /*
-	Socket¿Í»§¶Ë´úÂë
-	·þÎñÆ÷127.0.0.1Í¨ÐÅ£¬¶Ë¿Ú8888
-	½¨Á¢Á¬½Óºó£¬·¢ËÍ¸ø·þÎñÆ÷£¬ÐèÒª´«ÊäµÄÎÄ¼þÂ·¾¶
-	ÈôÎÄ¼þÂ·¾¶´æÔÚ£¬½ÓÊÕ·þÎñÆ÷·¢ËÍµÄÎÄ¼þÁ÷£¬·¢ËÍÍê±ÏÔò¹Ø±ÕÁ¬½Ó¡£
+	Socketå®¢æˆ·ç«¯ä»£ç 
+	æœåŠ¡å™¨127.0.0.1é€šä¿¡ï¼Œç«¯å£8888
+	å»ºç«‹è¿žæŽ¥åŽï¼Œå‘é€ç»™æœåŠ¡å™¨ï¼Œéœ€è¦ä¼ è¾“çš„æ–‡ä»¶è·¯å¾„
+	è‹¥æ–‡ä»¶è·¯å¾„å­˜åœ¨ï¼ŒæŽ¥æ”¶æœåŠ¡å™¨å‘é€çš„æ–‡ä»¶æµï¼Œå‘é€å®Œæ¯•åˆ™å…³é—­è¿žæŽ¥ã€‚
 */
 
 #include <tchar.h>
@@ -22,7 +22,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	/*
-	³õÊ¼»¯WSA£¬Ê¹µÃ³ÌÐò¿ÉÒÔµ÷ÓÃwindows socket
+	åˆå§‹åŒ–WSAï¼Œä½¿å¾—ç¨‹åºå¯ä»¥è°ƒç”¨windows socket
 	*/
 	WORD sockVersion = MAKEWORD(2, 2);
 	WSADATA wsaData;
@@ -32,51 +32,54 @@ int main(int argc, char* argv[])
 	}
 
 	/*
-	´´½¨Ì×½Ó×Ö£¬client_socket
-	²¢¼ì²âÊÇ·ñ´´½¨³É¹¦
+	åˆ›å»ºå¥—æŽ¥å­—ï¼Œclient_socket
+	å¹¶æ£€æµ‹æ˜¯å¦åˆ›å»ºæˆåŠŸ
 	*/
 	SOCKET client_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (client_socket == INVALID_SOCKET) {
-		//Èç¹û´´½¨µÄsocketÎÞÐ§£¬Ôò½áÊø³ÌÐò
+		//å¦‚æžœåˆ›å»ºçš„socketæ— æ•ˆï¼Œåˆ™ç»“æŸç¨‹åº
 		perror("socket error !");
 		return 0;
 	}
 
 	/*
-	´´½¨µØÖ·½á¹¹£¬server_addr£¬²¢ÉèÖÃ¶Ë¿ÚºÍIP
+	åˆ›å»ºåœ°å€ç»“æž„ï¼Œserver_addrï¼Œå¹¶è®¾ç½®ç«¯å£å’ŒIP
 	*/
 	sockaddr_in server_addr;
 	memset(&server_addr, 0, sizeof(server_addr));
 	server_addr.sin_family = AF_INET;
-	//ÒªÁ¬½ÓµÄ·þÎñÆ÷¶Ë¿ÚºÅ 8888
+	//è¦è¿žæŽ¥çš„æœåŠ¡å™¨ç«¯å£å· 8888
 	server_addr.sin_port = htons(8888);
-	//Ö¸¶¨·þÎñÆ÷µÄµØÖ·127.0.0.1
+	//æŒ‡å®šæœåŠ¡å™¨çš„åœ°å€127.0.0.1
 	InetPton(AF_INET, "127.0.0.1", &server_addr.sin_addr.s_addr);
 
-	//ÓëµØÖ·server_addr½¨Á¢Á¬½Ó
+	//ä¸Žåœ°å€server_addrå»ºç«‹è¿žæŽ¥
 	if (connect(client_socket, (SOCKADDR*)&server_addr, sizeof(SOCKADDR)))
 	{
 		perror("connect error !\n");
 		return 0;
 	}
 
-	char DATE_NEED[DATE_NAME_MAX_SIZE + 1];
-	memset(DATE_NEED, 0, DATE_NAME_MAX_SIZE + 1);
-	printf("ÇëÊäÈëÒª»ñÈ¡µÄÈÕÀúÄêÔÂ·Ý:\n");
-	scanf_s("%s", DATE_NEED, DATE_NAME_MAX_SIZE);
+	//	char DATE_NEED[DATE_NAME_MAX_SIZE + 1];
+//	memset(DATE_NEED, 0, DATE_NAME_MAX_SIZE + 1);
+	printf("è¯·è¾“å…¥è¦èŽ·å–çš„æ—¥åŽ†å¹´æœˆä»½:\n");
+//	scanf_s("%s", DATE_NEED, DATE_NAME_MAX_SIZE);
 
 	char buffer[BUFFER_SIZE];
-	memset(buffer, 0, BUFFER_SIZE);
-	strncpy_s(buffer, DATE_NEED, strlen(DATE_NEED) > BUFFER_SIZE ? BUFFER_SIZE : strlen(DATE_NEED));
+//	memset(buffer, 0, BUFFER_SIZE);
+//	strncpy_s(buffer, DATE_NEED, strlen(DATE_NEED) > BUFFER_SIZE ? BUFFER_SIZE : strlen(DATE_NEED));
 
-	// Ïò·þÎñÆ÷·¢ËÍbufferÖÐµÄÊý¾Ý 
+	//é”®ç›˜è¾“å…¥å­˜æ”¾åœ¨bufferä¸­
+	gets_s(buffer,BUFFER_SIZE);
+
+	// å‘æœåŠ¡å™¨å‘é€bufferä¸­çš„æ•°æ® 
 	if (send(client_socket, buffer, BUFFER_SIZE, 0) < 0)
 	{
-		perror("·¢ËÍÎÄ¼þÃûÊ§°Ü:");
+		perror("å‘é€æ–‡ä»¶åå¤±è´¥:");
 		exit(1);
 	}
 
-	// ´Ó·þÎñÆ÷½ÓÊÕÊý¾Ýµ½bufferÖÐ,²¢Á÷ÏòÆÁÄ» 
+	// ä»ŽæœåŠ¡å™¨æŽ¥æ”¶æ•°æ®åˆ°bufferä¸­,å¹¶æµå‘å±å¹• 
 	memset(buffer, 0, BUFFER_SIZE);
 	int length = 0;
 	while ((length = recv(client_socket, buffer, BUFFER_SIZE, 0)) > 0)
@@ -86,7 +89,7 @@ int main(int argc, char* argv[])
 	}
 
 
-	// ½ÓÊÕ³É¹¦ºó£¬¹Ø±ÕÎÄ¼þ£¬¹Ø±Õsocket¡¢WSA 
+	// æŽ¥æ”¶æˆåŠŸåŽï¼Œå…³é—­æ–‡ä»¶ï¼Œå…³é—­socketã€WSA 
 	closesocket(client_socket);
 	WSACleanup();
 	system("pause");
